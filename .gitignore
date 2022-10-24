@@ -1,1 +1,11 @@
+# General
 .DS_Store
+
+# Corona-Script
+corona-data.json
+
+# Terraform
+.terraform*
+
+# Python
+__pycache__*
