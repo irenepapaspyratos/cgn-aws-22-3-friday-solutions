@@ -1,12 +1,6 @@
 import json
 import requests
 
-urlBase = "https://api.covid19api.com"
-urlVariable = "/country/germany?from=2022-10-14T00:00:00Z&to=2022-10-21T00:00:00Z"
-
-pathToJsonFile = "./corona-data.json"
-
-
 def get_json(urlVar):
     response = requests.get(urlVar)
     return response.json()
@@ -28,17 +22,13 @@ def calculate(jsonData):
 
     lockdownFulfilled = False
     for day in range(0,7):
-        if jsonData[day]["active"] > 10000:
+        if jsonData[day]["Active"] > 10000:
             lockdownFulfilled = True
             break
     
     return [calculatedCases, calculatedActives, trendValue, lockdownFulfilled]
 
-def magicFunction(pathToFileVar):
-    jsonData = get_json(urlBase + urlVariable)
+def saveJsonFileLocal(pathToFileVar, url):
+    jsonData = get_json(url)
     with open(pathToFileVar, 'w') as file:
         json.dump(calculate(jsonData), file)
-
-
-# Do the magic
-magicFunction(pathToJsonFile)

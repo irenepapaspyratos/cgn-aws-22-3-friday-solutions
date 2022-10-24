@@ -18,15 +18,15 @@ We will build da dashboard for corona data
     "cases":12345,
     "active": 234,
     "trend": "UP",
-    "lockdown": True
+    "lockdown": true
 }
 
 ```
 
--   cases: are all cases
+-   cases: all ever confirmed cases
 -   active: currently infectet
--   trend: active cases increases or decreasing over the last 7 days
--   lockdown: active over last 7 days over 10.000
+-   trend: active cases increasing or decreasing over the last 7 days
+-   lockdown: active during last 7 days over 10.000
 
 3. Use the python sdk to upload the result `corona-data.json` to an s3 bucket
 
