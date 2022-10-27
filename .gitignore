@@ -9,3 +9,6 @@ corona-data.json
 
 # Python
 __pycache__*
+
+# Api VenV
+*/*_venv
