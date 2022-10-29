@@ -6,6 +6,7 @@ corona-data.json
 
 # Terraform
 .terraform*
+.terraform
 
 # Python
 __pycache__*
