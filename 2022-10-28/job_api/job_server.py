@@ -42,6 +42,7 @@ def get_job(id: str):
     if job_service.get_job(id): return job_service.get_job(id)
     raise HTTPException(status_code=404, detail="Job not found")
 
+# Add one Job to the Job-array. Its succenfull status 201 for created its not 500 for server error
 @app.post("/job", status_code=status.HTTP_201_CREATED)
 async def save_job(id, job):
     if job_service.save_job(id, job): return job
