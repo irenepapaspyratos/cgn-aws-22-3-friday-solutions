@@ -13,3 +13,6 @@ __pycache__*
 
 # Api VenV
 */*_venv
+
+# Misc
+*/jobs-bucket

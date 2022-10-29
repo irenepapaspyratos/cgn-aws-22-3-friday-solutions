@@ -4,3 +4,4 @@ class Job(BaseModel):
     id: str
     title: str
     description: str
+    
