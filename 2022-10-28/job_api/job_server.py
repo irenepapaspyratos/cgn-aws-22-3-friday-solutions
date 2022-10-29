@@ -12,14 +12,15 @@ app = FastAPI()
 externalApiUrl = "https://www.arbeitnow.com/api/job-board-api"
 pathToBucketFolder = "./jobs-bucket/"
 
-# The JSONResponse is a quick way to send custom status with content to display
+# The JSONResponse is a quick way to send custom statuscode with content to display
 @app.get("/")
 def read_root():
     return JSONResponse(status_code=200, content={"message": "Your API is working fine!"})
 
 # A custom default status_code after the route can be set to be returned
 # Otherwise the regular default HTTP status will be sent (would be 200 in this case)
-# The status_code can be changed if anything happens
+# The status_code can be changed if anything happens, 
+# but for all Programmers are better you use a status code that was the same like the right statuscode for example 200 for " OK "
 @app.get("/job/request-jobs", status_code=status.HTTP_201_CREATED)
 async def save_jobs():
     if job_service.save_jobs() is False: 
@@ -32,7 +33,7 @@ async def save_jobs():
 def get_jobs():
     jobs = job_service.list_jobs()
     if jobs: return jobs
-    else: raise HTTPException(status_code=500, detail="No Jobs could be loaded")
+    else: raise HTTPException(status_code=404, detail="No Jobs could be loaded")
 
 # A type can also be set/requested to check an "input"
 @app.get("/job/{id}")
@@ -40,6 +41,7 @@ def get_job(id: str):
     if job_service.get_job(id): return job_service.get_job(id)
     raise HTTPException(status_code=404, detail="Job not found")
 
+# Add one Job to the Job-array. Its succenfull status 201 for created its not 500 for server error
 @app.post("/job", status_code=status.HTTP_201_CREATED)
 async def save_job(id, job):
     job = jsonable_encoder(job)
@@ -62,12 +64,13 @@ async def upsert_job(id, jobNewVersion, response: Response):
             return job_service.save_job(id, jobNewVersion)
         else: raise HTTPException(status_code=500, detail="New job could not be saved")
 
+# Job are deleted by id
 @app.delete("/job/{id}", response_model= str)
 def delete_job(id):
     result = job_service.delete_job(id)
     if result is False: raise HTTPException(status_code=404, detail="Job not found")
     return result
     
-
+# Start the main Method
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
