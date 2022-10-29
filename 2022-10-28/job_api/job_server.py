@@ -1,4 +1,3 @@
-import os
 from urllib import response
 from fastapi import FastAPI, HTTPException, Response, status
 from fastapi.responses import JSONResponse
@@ -43,7 +42,8 @@ def get_job(id: str):
 
 @app.post("/job", status_code=status.HTTP_201_CREATED)
 async def save_job(id, job):
-    if job_service.save_job(id, job): return job
+    job = jsonable_encoder(job)
+    if job_service.save_job(id, job): return job_service.save_job(id, job)
     raise HTTPException(status_code=500, detail="Job could not be saved")
 
 # The Response-Model can assure to send as answer: custom HTTP-status AND a result to display in certain format

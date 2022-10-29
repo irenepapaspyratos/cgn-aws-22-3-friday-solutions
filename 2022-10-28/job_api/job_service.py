@@ -1,3 +1,4 @@
+from genericpath import exists
 import os
 import glob
 import requests
@@ -5,10 +6,14 @@ import json
 
 
 global urlVar, pathToFolder
-externalApi = "https://www.arbeitnow.com/api/job-board-api"
-pathToLocalFolder = "../jobs-bucket/"
+externalApi = 'https://www.arbeitnow.com/api/job-board-api'
+nameFolder = 'jobs-bucket'
+pathToLocalFolder = '../' + nameFolder + '/'
 
 #----------------General----------------------
+
+def check_folder(pathToFolder):
+    if not exists(pathToFolder): os.mkdir(pathToFolder)
 
 def get_json(url):
     res = requests.get(url)
@@ -22,6 +27,8 @@ def create_job(singleJsonObject):
     }
 
 def save_job(idVar, jsonObject, pathToFolder = pathToLocalFolder):
+    print (jsonObject)
+    check_folder(pathToFolder)
     pathToFile = os.path.join(pathToFolder, idVar+'.json')
     with open(pathToFile, 'w') as file:
         json.dump(jsonObject, file)
@@ -30,6 +37,7 @@ def save_job(idVar, jsonObject, pathToFolder = pathToLocalFolder):
 #----------------Service---------------------
 
 def save_jobs(urlVar = externalApi, pathToFolder = pathToLocalFolder):
+    check_folder(pathToFolder)
     try:
         json = get_json(urlVar)
         jobsArray = json["data"]
