@@ -71,6 +71,6 @@ def delete_job(id):
     if result is False: raise HTTPException(status_code=404, detail="Job not found")
     return result
     
-
+# Start the main Method
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
