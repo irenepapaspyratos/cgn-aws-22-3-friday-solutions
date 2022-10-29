@@ -19,7 +19,7 @@ def get_json(url):
     res = requests.get(url)
     return res.json()
 
-# Create a job like the json after return. Here is the template for the json not the active creation
+# Create a job in the requested json-format by return. This is the function to create the json, not yet used
 def create_job(singleJsonObject):
     return {
         "id": singleJsonObject["slug"],
@@ -27,7 +27,7 @@ def create_job(singleJsonObject):
         "description": singleJsonObject["description"]
     }
 
-# Here we are save the job in a file with the name idvar.json that is like the id of the Object and a json ending
+# Save the job in a file with the name idVar.json: id of the Object with a json extension
 def save_job(idVar, jsonObject, pathToFolder = pathToLocalFolder):
     print (jsonObject)
     check_folder(pathToFolder)
@@ -38,7 +38,7 @@ def save_job(idVar, jsonObject, pathToFolder = pathToLocalFolder):
 
 #----------------Service---------------------
 
-# Here is the function where we save all jobs in the API with the help of the for loop
+# Save all jobs in a folder with help of a for loop
 def save_jobs(urlVar = externalApi, pathToFolder = pathToLocalFolder):
     check_folder(pathToFolder)
     try:
@@ -51,8 +51,8 @@ def save_jobs(urlVar = externalApi, pathToFolder = pathToLocalFolder):
     except:
         return False
 
-# Here we are list all jobs in the folder pathToFolder. But only this files that have a json ending
-# The function of glob.glob is to retrieve files/path names that correspond to a certain pattern. You must import that but not install
+# Create a list of all jobs, that are stored in the folder pathToFolder. Only files with a json-extension are taken.
+# The function of glob.glob retrieves files/path-names that correspond to a certain pattern. It must be imported but not installed.
 def list_jobs(pathToFolder = pathToLocalFolder):
     jobsArray = []
     for filename in glob.glob(pathToFolder + '*.json'):
@@ -61,14 +61,13 @@ def list_jobs(pathToFolder = pathToLocalFolder):
             jobsArray.append(fileContent)
     return jobsArray
 
-# Here we are get one Job with the id
+# Get one Job by it's id
 def get_job(idVar, pathToFolder = pathToLocalFolder):
     if os.path.isfile(os.path.join(pathToFolder, idVar+'.json')):
         with open(os.path.join(pathToFolder, idVar+'.json'), 'r') as f:
             return json.loads(f.read())
 
-# Here we are delete one job with the id
+# Delete one Job by it's id
 def delete_job(idVar, pathToFolder = pathToLocalFolder):
     os.remove(os.path.join(pathToFolder, idVar+'.json'))
     return idVar
-

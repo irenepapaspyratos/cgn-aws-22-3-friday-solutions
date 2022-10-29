@@ -20,7 +20,7 @@ def read_root():
 # A custom default status_code after the route can be set to be returned
 # Otherwise the regular default HTTP status will be sent (would be 200 in this case)
 # The status_code can be changed if anything happens, 
-# but for all Programmers are better you use a status code that was the same like the right statuscode for example 200 for " OK "
+# but for consistence and conventional reasons for each situation the standard status code should be taken (in this example: 200 for " OK ")
 @app.get("/job/request-jobs", status_code=status.HTTP_201_CREATED)
 async def save_jobs():
     if job_service.save_jobs() is False: 
@@ -41,7 +41,9 @@ def get_job(id: str):
     if job_service.get_job(id): return job_service.get_job(id)
     raise HTTPException(status_code=404, detail="Job not found")
 
-# Add one Job to the Job-array. Its succenfull status 201 for created its not 500 for server error
+# Save one Job to the Job-folder. 
+# If it was succenful, status 201 for created is set be responded
+# If it wasn't successful, status 500 for server error is set to be responded
 @app.post("/job", status_code=status.HTTP_201_CREATED)
 async def save_job(id, job):
     job = jsonable_encoder(job)
@@ -49,7 +51,7 @@ async def save_job(id, job):
     raise HTTPException(status_code=500, detail="Job could not be saved")
 
 # The Response-Model can assure to send as answer: custom HTTP-status AND a result to display in certain format
-# Upsert => update old one or create new one
+# Upsert => update old one or create new one, if this one isn't existing yet
 @app.put("/job/{id}", status_code=200)
 async def upsert_job(id, jobNewVersion, response: Response):
     if job_service.get_job(id):
@@ -64,7 +66,7 @@ async def upsert_job(id, jobNewVersion, response: Response):
             return job_service.save_job(id, jobNewVersion)
         else: raise HTTPException(status_code=500, detail="New job could not be saved")
 
-# Job are deleted by id
+# Delete job by id
 @app.delete("/job/{id}", response_model= str)
 def delete_job(id):
     result = job_service.delete_job(id)
