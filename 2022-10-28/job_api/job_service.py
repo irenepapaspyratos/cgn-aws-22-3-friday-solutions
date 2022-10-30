@@ -29,7 +29,6 @@ def create_job(singleJsonObject):
 
 # Save the job in a file with the name idVar.json: id of the Object with a json extension
 def save_job(idVar, jsonObject, pathToFolder = pathToLocalFolder):
-    print (jsonObject)
     check_folder(pathToFolder)
     pathToFile = os.path.join(pathToFolder, idVar+'.json')
     with open(pathToFile, 'w') as file:
