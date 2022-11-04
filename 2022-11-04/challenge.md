@@ -23,19 +23,3 @@ Exercise to learn the Basics about lambda
 ### 4. CD (optional)
 
 1. Setup a github actions pipeline that deploys your code and infrastructure ( you can use the cli to create the bucket)
-
-<br/><br/>
-
-# Solution
-
-## Task 1.1
-
--   start lab, update credentials, download .pem and give permissions
--   in terminal:
-
-    ```
-    aws s3api create-bucket
-                 --bucket ip-lamda-bucket
-                 --region us-west-2
-                 --create-bucket-configuration LocationConstraint=us-west-2
-    ```
