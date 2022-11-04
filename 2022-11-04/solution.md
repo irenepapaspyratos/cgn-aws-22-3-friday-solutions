@@ -43,5 +43,40 @@
 -   replace the default lambda-code with one that does the job of the task:
 
     ```
-    code coming
+    import json
+    import requests
+    import boto3
+
+    url = 'https://www.arbeitnow.com/api/job-board-api'
+
+    def get_json(urlVar):
+        try:
+            res = requests.get(urlVar)
+            return res.json()
+        except:
+            return False
+
+    def create_job(singleJsonObject):
+        return {
+            "id": singleJsonObject["slug"],
+            "title": singleJsonObject["title"],
+            "description": singleJsonObject["description"]
+        }
+
+    def save_job(jsonJob):
+        s3_client = boto3.client('s3')
+        #object = s3_client.Object('ip-lamda-bucket', jsonJob['id']+'.json')
+        #object.put(Body=jsonJob)
+        return s3_client.put_object(Body=json.dumps(jsonJob), Bucket='ip-lamda-bucket', Key=jsonJob['id']+'.json')
+
+    def lambda_handler(event, context):
+        try:
+            json = get_json(url)
+            jobsArray = json["data"]
+            for job in jobsArray:
+                jobJson = create_job(job)
+                save_job(jobJson)
+            return True
+        except:
+            return False
     ```
