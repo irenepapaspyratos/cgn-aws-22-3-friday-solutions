@@ -16,7 +16,7 @@
 
 -   create a .zip of requests to import in layer for lambda by executing the following commands one after another:
 
-    ```
+    ```bash
     mkdir python
     cd python
     pip3 install requests -t .
@@ -42,7 +42,7 @@
 
 -   replace the default lambda-code with one that does the job of the task:
 
-    ```
+    ```py
     import json
     import requests
     import boto3
