@@ -3,6 +3,7 @@
 ## Task 1.1
 
 -   start lab, update credentials, download .pem and give permissions
+
 -   in terminal:
 
     ```
@@ -91,3 +92,35 @@
                 break
         return result_array
     ```
+
+## Task 2.1
+
+-   online: fork the given repo
+
+## Task 2.2
+
+-   clone the forked repo locally
+
+-   create new branch and checkout to it
+
+## Task 2.3
+
+-   in setup_src_bucket.sh, upload-src.sh and infrastructure > script > userdata.sh replace the srcBucket-name with a personal one
+
+-   do add & commit
+
+-   in setup_terraform_bucket.sh and infrastructure > main.tf replace the terraformBucket-name with a personal one
+
+-   do add & commit
+
+-   open terminal in main-folder and
+
+    -   run src-bucket-scripts to create the src-bucket and upload it's content in S3
+
+-   open terminal in terraform-folder and
+
+    -   run terraform-bucket-script to create the terraform-bucket in S3
+
+    -   do `terraform init`
+
+    -   do `terraform plan` to confirm everything works, then `terraform apply`
