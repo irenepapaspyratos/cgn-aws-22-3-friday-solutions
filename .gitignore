@@ -6,6 +6,14 @@ corona-data.json
 
 # Terraform
 .terraform*
+.terraform
 
 # Python
 __pycache__*
+
+# Api VenV
+*/*_venv
+
+# Misc
+*/jobs-bucket
+2022-11-04/*.zip
